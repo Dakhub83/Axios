@@ -25,7 +25,7 @@ export default function AboutPage() {
         toughest critics before it ever earned the right to be sold.
       </p>
 
-      <h2 className="text-xl font-semibold mt-10 mb-3">How we test</h2>
+      <h2 id="how-we-test" className="text-xl font-semibold mt-10 mb-3">How we test</h2>
       <ul className="list-disc pl-5 space-y-2 text-foreground/80">
         <li>
           <strong>First wear:</strong> initial fit, range of motion, and the deep-squat check &mdash;

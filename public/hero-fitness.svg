@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0806"/>
+      <stop offset="55%" stop-color="#0c0a07"/>
+      <stop offset="100%" stop-color="#020202"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="85%" cy="12%" r="70%">
+      <stop offset="0%" stop-color="#e2bf72" stop-opacity="0.7"/>
+      <stop offset="40%" stop-color="#a37f3a" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="8%" cy="95%" r="55%">
+      <stop offset="0%" stop-color="#8a6a35" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="55%" r="75%">
+      <stop offset="45%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.7"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#base)"/>
+  <rect width="1600" height="1000" fill="url(#glow)"/>
+  <rect width="1600" height="1000" fill="url(#glow2)"/>
+
+  <g opacity="0.45" stroke="#d9b567" stroke-width="1.5" fill="none">
+    <path d="M -100 780 C 300 650, 700 900, 1150 620 S 1900 520, 2100 700"/>
+    <path d="M -100 850 C 350 760, 750 970, 1200 700 S 1950 600, 2150 780" opacity="0.6"/>
+  </g>
+
+  <rect width="1600" height="1000" fill="url(#vignette)"/>
+</svg>

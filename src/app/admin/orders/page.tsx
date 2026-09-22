@@ -1,4 +1,5 @@
 import { listOrders } from "@/lib/orders";
+import { paymentMethodLabel } from "@/lib/payments";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,7 @@ export default function AdminOrdersPage() {
                 {order.customerName} &mdash; {order.email}
               </p>
               <p className="text-sm text-foreground/70">{order.address}</p>
+              <p className="text-sm text-foreground/60 mt-1">Payment: {paymentMethodLabel(order.paymentMethod)}</p>
               <ul className="mt-3 text-sm space-y-1">
                 {order.items.map((item) => (
                   <li key={item.id}>

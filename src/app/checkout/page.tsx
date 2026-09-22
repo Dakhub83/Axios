@@ -4,6 +4,7 @@ import { useActionState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/CartContext";
 import { placeOrderAction, type CheckoutState } from "./actions";
+import { paymentMethods } from "@/lib/payments";
 
 const initialState: CheckoutState = { success: false, message: "" };
 
@@ -80,6 +81,32 @@ export default function CheckoutPage() {
           <label className="block text-sm font-semibold mb-1">Shipping address</label>
           <textarea name="address" required rows={3} className="w-full border border-border rounded px-3 py-2 bg-background" />
         </div>
+
+        <fieldset>
+          <legend className="block text-sm font-semibold mb-2">Payment method</legend>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {paymentMethods.map((method, i) => (
+              <label
+                key={method.id}
+                className="flex items-start gap-3 rounded-lg border border-border p-3 text-sm cursor-pointer transition-colors has-checked:border-accent has-checked:bg-muted"
+              >
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value={method.id}
+                  defaultChecked={i === 0}
+                  required
+                  className="mt-1 accent-accent"
+                />
+                <span>
+                  <span className="block font-semibold">{method.label}</span>
+                  <span className="block text-foreground/60 text-xs">{method.description}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
         <button
           type="submit"
           disabled={pending}

@@ -1,46 +1,99 @@
 import Link from "next/link";
 import { listProducts } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
+import AppPromoSection from "@/components/AppPromoSection";
+
+const categoryTiles = [
+  { label: "Leggings", category: "Leggings" },
+  { label: "Jackets", category: "Jackets" },
+  { label: "Tops", category: "Tops" },
+  { label: "Hoodies", category: "Hoodies" },
+  { label: "Joggers", category: "Joggers" },
+  { label: "Accessories", category: "Accessories" },
+];
 
 export default function HomePage() {
   const products = listProducts().slice(0, 4);
 
   return (
     <div>
-      <section className="max-w-6xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-3xl sm:text-5xl font-bold uppercase tracking-tight max-w-3xl mx-auto">
-          Built to fail first in our house, not yours.
-        </h1>
-        <p className="mt-6 max-w-xl mx-auto text-foreground/70">
-          Every piece of Axios gear is designed, sewn, and stress-tested at home by the people who
-          wear it every day, then pushed through 30 days of real training before it&apos;s allowed on
-          this site.
-        </p>
-        <div className="mt-8 flex items-center justify-center gap-4">
-          <Link
-            href="/shop"
-            className="bg-accent text-black font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
-          >
-            Shop the Collection
-          </Link>
-          <Link href="/about" className="text-sm underline underline-offset-4 hover:text-accent">
-            See how we test
-          </Link>
+      <section
+        className="relative min-h-[85vh] flex items-center justify-center text-center bg-cover bg-center"
+        style={{ backgroundImage: "url(/hero-fitness.svg)" }}
+      >
+        <div className="relative z-10 px-4 max-w-3xl mx-auto">
+          <h1 className="font-serif uppercase text-4xl sm:text-6xl leading-tight tracking-wide">
+            Built to Fail
+            <br />
+            First in Our House
+          </h1>
+          <p className="mt-6 font-serif text-lg sm:text-xl text-foreground/80">
+            Not yours. Every piece is{" "}
+            <span className="italic text-accent">hand-tested</span> at home before it
+            ever reaches the shop floor.
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-6">
+            <Link
+              href="/shop"
+              className="border border-accent text-accent px-8 py-3 rounded-full text-sm tracking-[0.15em] uppercase hover:bg-accent hover:text-black transition-colors"
+            >
+              Shop the Collection
+            </Link>
+            <Link
+              href="/about"
+              className="text-sm tracking-[0.15em] uppercase underline underline-offset-4 hover:text-accent transition-colors"
+            >
+              See how we test
+            </Link>
+          </div>
         </div>
       </section>
 
       <section className="border-y border-border">
-        <div className="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-sm">
+        <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border text-center text-xs tracking-[0.15em] uppercase text-foreground/70">
           <div className="p-3">30-Day Wear Test</div>
           <div className="p-3">Squat-Proof Certified</div>
           <div className="p-3">Flatlock Seams, Zero Chafe</div>
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-4 py-16">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold">Latest gear</h2>
-          <Link href="/shop" className="text-sm underline underline-offset-4 hover:text-accent">
+      <section className="max-w-6xl mx-auto px-4 py-20">
+        <div className="flex items-end justify-between mb-8">
+          <h2 className="font-serif text-2xl sm:text-3xl">Shop by Category</h2>
+          <Link
+            href="/shop"
+            className="text-sm tracking-widest uppercase underline underline-offset-4 hover:text-accent"
+          >
+            Shop Now
+          </Link>
+        </div>
+        <div className="flex gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible sm:pb-0 lg:grid-cols-6">
+          {categoryTiles.map((tile) => (
+            <Link key={tile.category} href={`/shop?category=${encodeURIComponent(tile.category)}`} className="group w-36 shrink-0 sm:w-auto">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-linear-to-br from-muted via-muted to-background">
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(201,162,75,0.18),transparent_60%)] transition-opacity group-hover:opacity-70"
+                />
+                <span className="absolute inset-0 flex items-center justify-center font-serif text-6xl text-foreground/10 transition-colors group-hover:text-foreground/15">
+                  {tile.label.charAt(0)}
+                </span>
+              </div>
+              <div className="mt-3 rounded-md border border-border py-3 text-center text-xs uppercase tracking-widest transition-colors group-hover:border-accent group-hover:text-accent">
+                {tile.label}
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-4 py-20">
+        <div className="flex items-end justify-between mb-10">
+          <h2 className="font-serif text-2xl sm:text-3xl">Latest gear</h2>
+          <Link
+            href="/shop"
+            className="text-sm tracking-widest uppercase underline underline-offset-4 hover:text-accent"
+          >
             View all
           </Link>
         </div>
@@ -60,6 +113,8 @@ export default function HomePage() {
           </div>
         )}
       </section>
+
+      <AppPromoSection />
     </div>
   );
 }
