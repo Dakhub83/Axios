@@ -4,8 +4,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { navItems, slugify } from "@/lib/megaMenu";
 import NavTag from "./NavTag";
+import type { SafeUser } from "@/lib/auth";
 
-export default function MobileNav({ onNavigate }: { onNavigate: () => void }) {
+export default function MobileNav({
+  onNavigate,
+  user,
+}: {
+  onNavigate: () => void;
+  user: SafeUser | null;
+}) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   function toggle(label: string) {
@@ -164,6 +171,34 @@ export default function MobileNav({ onNavigate }: { onNavigate: () => void }) {
             </li>
           );
         })}
+        <li className="pt-4">
+          <Link
+            href={user ? "/account" : "/login"}
+            onClick={onNavigate}
+            className="font-serif text-xl hover:text-accent transition-colors sm:hidden"
+          >
+            {user ? user.fullName || "Account" : "Log In"}
+          </Link>
+        </li>
+        <li className="pt-4 sm:hidden">
+          <p className="font-serif text-xl">Help</p>
+          <div className="mt-2 space-y-2 pl-1">
+            <Link
+              href="/return-policy"
+              onClick={onNavigate}
+              className="block text-sm text-foreground/80 hover:text-accent transition-colors"
+            >
+              Return Policy
+            </Link>
+            <Link
+              href="/return-item"
+              onClick={onNavigate}
+              className="block text-sm text-foreground/80 hover:text-accent transition-colors"
+            >
+              Return Item
+            </Link>
+          </div>
+        </li>
         <li className="pt-4">
           <Link
             href="/cart"

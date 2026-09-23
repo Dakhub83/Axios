@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import CartCount from "./CartCount";
 import NavDropdown from "./NavDropdown";
+import HelpMenu from "./HelpMenu";
+import type { SafeUser } from "@/lib/auth";
 
-export default function Header() {
+export default function Header({ user }: { user: SafeUser | null }) {
   const [open, setOpen] = useState(false);
 
   function close() {
@@ -20,6 +22,14 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center gap-4">
+          <Link
+            href={user ? "/account" : "/login"}
+            onClick={close}
+            className="hidden sm:inline text-sm tracking-wide hover:text-accent transition-colors"
+          >
+            {user ? user.fullName || "Account" : "Log In"}
+          </Link>
+          <HelpMenu />
           <Link
             href="/cart"
             onClick={close}
@@ -48,7 +58,7 @@ export default function Header() {
         </div>
       </div>
 
-      <NavDropdown id="nav-dropdown" open={open} onClose={close} />
+      <NavDropdown id="nav-dropdown" open={open} onClose={close} user={user} />
     </header>
   );
 }

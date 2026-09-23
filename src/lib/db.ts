@@ -161,6 +161,25 @@ db.exec(`
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  CREATE TABLE IF NOT EXISTS return_requests (
+    id TEXT PRIMARY KEY,
+    order_email TEXT NOT NULL,
+    order_number TEXT NOT NULL DEFAULT '',
+    item_description TEXT NOT NULL,
+    reason TEXT NOT NULL,
+    resolution TEXT NOT NULL DEFAULT 'refund',
+    details TEXT NOT NULL DEFAULT '',
+    status TEXT NOT NULL DEFAULT 'pending',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
+  CREATE TABLE IF NOT EXISTS sessions (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    expires_at TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
   -- 3. Order & Payment Transactions schema
   CREATE TABLE IF NOT EXISTS payment_transactions (
     id TEXT PRIMARY KEY,

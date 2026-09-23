@@ -170,6 +170,18 @@ export type TeamOrderInquiry = {
   createdAt: string;
 };
 
+export type ReturnRequest = {
+  id: string;
+  orderEmail: string;
+  orderNumber: string;
+  itemDescription: string;
+  reason: string;
+  resolution: string;
+  details: string;
+  status: string;
+  createdAt: string;
+};
+
 export type WearTestEntry = {
   id: string;
   testerName: string;

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { navItems } from "@/lib/megaMenu";
 import MegaPanelContent from "./MegaPanelContent";
 import MobileNav from "./MobileNav";
+import type { SafeUser } from "@/lib/auth";
 
 const defaultActiveLabel = navItems.find((item) => item.mega)?.label ?? navItems[0].label;
 
@@ -12,10 +13,12 @@ export default function NavDropdown({
   id,
   open,
   onClose,
+  user,
 }: {
   id: string;
   open: boolean;
   onClose: () => void;
+  user: SafeUser | null;
 }) {
   const [activeLabel, setActiveLabel] = useState(defaultActiveLabel);
   const [prevOpen, setPrevOpen] = useState(open);
@@ -87,7 +90,7 @@ export default function NavDropdown({
         </div>
 
         <div className="lg:hidden">
-          <MobileNav onNavigate={onClose} />
+          <MobileNav onNavigate={onClose} user={user} />
         </div>
       </div>
     </div>
