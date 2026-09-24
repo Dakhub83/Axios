@@ -26,6 +26,20 @@ export default function ProductForm({
 
       <div className="grid grid-cols-2 gap-4">
         <div>
+          <label className="block text-sm font-semibold mb-1">Department *</label>
+          <select
+            name="department"
+            required
+            defaultValue={product?.department ?? "women"}
+            className="w-full border border-border rounded px-3 py-2 bg-background"
+          >
+            <option value="women">Women</option>
+            <option value="men">Men</option>
+            <option value="kids">Kids</option>
+            <option value="unisex">Unisex</option>
+          </select>
+        </div>
+        <div>
           <label className="block text-sm font-semibold mb-1">Category *</label>
           <input
             name="category"

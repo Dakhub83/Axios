@@ -14,6 +14,7 @@ async function buildProductInput(formData: FormData): Promise<ProductInput> {
   return {
     title: String(formData.get("title") || ""),
     category: String(formData.get("category") || ""),
+    department: String(formData.get("department") || "unisex"),
     price: Number(formData.get("price") || 0),
     shortDescription: String(formData.get("shortDescription") || ""),
     isWearTested: formData.get("isWearTested") === "on",

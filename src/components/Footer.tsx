@@ -15,9 +15,11 @@ const supportLinks: FooterLink[] = [
   { label: "Contact Us", href: "/contact" },
   { label: "Shipping & Returns", href: "/shipping-returns" },
   { label: "FAQ", href: "/faq" },
+  { label: "Return Policy", href: "/return-policy" },
+  { label: "Return Item", href: "/return-item" },
 ];
 
-const collectionLinks: FooterLink[] = navItems.map((item) => ({
+const shopLinks: FooterLink[] = navItems.map((item) => ({
   label: item.label,
   href: item.href,
 }));
@@ -58,7 +60,7 @@ export default function Footer() {
 
           <FooterColumn heading="Company" links={companyLinks} />
           <FooterColumn heading="Support" links={supportLinks} />
-          <FooterColumn heading="Collections" links={collectionLinks} />
+          <FooterColumn heading="Shop" links={shopLinks} />
           <FooterColumn heading="Legal" links={legalLinks} />
         </div>
 

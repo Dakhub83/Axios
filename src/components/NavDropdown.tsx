@@ -7,7 +7,7 @@ import MegaPanelContent from "./MegaPanelContent";
 import MobileNav from "./MobileNav";
 import type { SafeUser } from "@/lib/auth";
 
-const defaultActiveLabel = navItems.find((item) => item.mega)?.label ?? navItems[0].label;
+const defaultActiveLabel = navItems.find((item) => item.links)?.label ?? navItems[0].label;
 
 export default function NavDropdown({
   id,
@@ -82,8 +82,8 @@ export default function NavDropdown({
         </nav>
 
         <div className="hidden lg:flex lg:flex-1">
-          {activeItem?.mega ? (
-            <MegaPanelContent mega={activeItem.mega} onNavigate={onClose} />
+          {activeItem?.links ? (
+            <MegaPanelContent links={activeItem.links} onNavigate={onClose} />
           ) : (
             <p className="text-sm text-foreground/50">Fresh drops, updated weekly.</p>
           )}

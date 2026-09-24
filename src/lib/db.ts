@@ -201,6 +201,10 @@ if (!hasColumn("orders", "payment_method")) {
   db.exec("ALTER TABLE orders ADD COLUMN payment_method TEXT NOT NULL DEFAULT 'card'");
 }
 
+if (!hasColumn("products", "department")) {
+  db.exec("ALTER TABLE products ADD COLUMN department TEXT NOT NULL DEFAULT 'unisex'");
+}
+
 if (!hasColumn("products", "category_id")) {
   db.exec("ALTER TABLE products ADD COLUMN category_id TEXT REFERENCES categories(id)");
 }

@@ -1,10 +1,13 @@
 export type ProductAttributes = Record<string, string | number | boolean>;
 
+export type Department = "women" | "men" | "kids" | "unisex";
+
 export type Product = {
   id: string;
   slug: string;
   title: string;
   category: string;
+  department: string;
   categoryId: string | null;
   price: number;
   shortDescription: string;

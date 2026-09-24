@@ -18,34 +18,41 @@ export default function HomePage() {
   return (
     <div>
       <section
-        className="relative min-h-[85vh] flex items-center justify-center text-center bg-cover bg-center"
-        style={{ backgroundImage: "url(/hero-fitness.svg)" }}
+        className="relative min-h-[85vh] flex flex-col text-left"
+        style={{
+          // Top to bottom: gold brand accents, a scrim that keeps the headline
+          // legible over the photo, then the photo itself.
+          backgroundImage:
+            "url(/hero-overlay.svg), linear-gradient(90deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.7) 34%, rgba(10,10,10,0.28) 68%, rgba(10,10,10,0.5) 100%), linear-gradient(180deg, rgba(10,10,10,0.25) 0%, rgba(10,10,10,0) 42%, rgba(10,10,10,0.88) 100%), url(/hero-athlete.png)",
+          backgroundSize: "cover, cover, cover, cover",
+          // Photo anchors to the top so the model's head is never cropped on
+          // short/wide viewports, where `cover` would otherwise crop both ends.
+          backgroundPosition: "center, center, center, center top",
+          backgroundRepeat: "no-repeat, no-repeat, no-repeat, no-repeat",
+        }}
       >
-        <div className="relative z-10 px-4 max-w-3xl mx-auto">
-          <h1 className="font-serif uppercase text-4xl sm:text-6xl leading-tight tracking-wide">
-            Built to Fail
-            <br />
-            First in Our House
-          </h1>
-          <p className="mt-6 font-serif text-lg sm:text-xl text-foreground/80">
-            Not yours. Every piece is{" "}
-            <span className="italic text-accent">hand-tested</span> at home before it
-            ever reaches the shop floor.
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-6">
-            <Link
-              href="/shop"
-              className="border border-accent text-accent px-8 py-3 rounded-full text-sm tracking-[0.15em] uppercase hover:bg-accent hover:text-black transition-colors"
-            >
-              Shop the Collection
-            </Link>
-            <Link
-              href="/about"
-              className="text-sm tracking-[0.15em] uppercase underline underline-offset-4 hover:text-accent transition-colors"
-            >
-              See how we test
-            </Link>
+        <div className="relative z-10 flex flex-1 items-center px-6 sm:px-10 lg:px-16">
+          <div className="max-w-xl">
+            <h1 className="font-serif uppercase text-4xl sm:text-6xl leading-tight tracking-wide">
+              No Claims.
+              <br />
+              Only Proof.
+            </h1>
+            <p className="mt-6 font-serif text-lg sm:text-xl text-foreground/80">
+              30 days of real training, 10+ wash cycles, and a{" "}
+              <span className="italic text-accent">published fabric spec</span> on every
+              tag.
+            </p>
           </div>
+        </div>
+
+        <div className="relative z-10 flex items-center px-6 sm:px-10 lg:px-16 pb-14">
+          <Link
+            href="/shop"
+            className="border border-accent text-accent px-8 py-3 rounded-full text-sm tracking-[0.15em] uppercase hover:bg-accent hover:text-black transition-colors"
+          >
+            Shop Now
+          </Link>
         </div>
       </section>
 

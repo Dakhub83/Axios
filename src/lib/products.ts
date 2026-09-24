@@ -24,6 +24,7 @@ function rowToProduct(row: Record<string, unknown>): Product {
     slug: row.slug as string,
     title: row.title as string,
     category: row.category as string,
+    department: (row.department as string) || "unisex",
     categoryId: (row.category_id as string) ?? null,
     price: row.price as number,
     shortDescription: row.short_description as string,
@@ -159,6 +160,7 @@ function slugify(title: string): string {
 export type ProductInput = {
   title: string;
   category: string;
+  department?: string;
   categoryId?: string | null;
   price: number;
   shortDescription: string;
@@ -177,8 +179,8 @@ export function createProduct(input: ProductInput): Product {
   if (existing) slug = `${slug}-${id.slice(0, 6)}`;
 
   const insertProduct = db.prepare(`
-    INSERT INTO products (id, slug, title, category, category_id, price, short_description, is_wear_tested, badge_description, attributes_json)
-    VALUES (@id, @slug, @title, @category, @categoryId, @price, @shortDescription, @isWearTested, @badgeDescription, @attributesJson)
+    INSERT INTO products (id, slug, title, category, department, category_id, price, short_description, is_wear_tested, badge_description, attributes_json)
+    VALUES (@id, @slug, @title, @category, @department, @categoryId, @price, @shortDescription, @isWearTested, @badgeDescription, @attributesJson)
   `);
 
   const insertImage = db.prepare(`
@@ -198,6 +200,7 @@ export function createProduct(input: ProductInput): Product {
       slug,
       title: input.title,
       category: input.category,
+      department: input.department ?? "unisex",
       categoryId: input.categoryId ?? null,
       price: input.price,
       shortDescription: input.shortDescription,
@@ -218,8 +221,8 @@ export function createProduct(input: ProductInput): Product {
 
 export function updateProduct(id: string, input: ProductInput): void {
   const tx = db.transaction(() => {
-    const current = db.prepare("SELECT category_id, attributes_json FROM products WHERE id = ?").get(id) as
-      | { category_id: string | null; attributes_json: string }
+    const current = db.prepare("SELECT category_id, attributes_json, department FROM products WHERE id = ?").get(id) as
+      | { category_id: string | null; attributes_json: string; department: string }
       | undefined;
     const categoryId = input.categoryId !== undefined ? input.categoryId : (current?.category_id ?? null);
     const attributesJson =
@@ -227,11 +230,12 @@ export function updateProduct(id: string, input: ProductInput): void {
 
     db.prepare(`
       UPDATE products
-      SET title = ?, category = ?, category_id = ?, price = ?, short_description = ?, is_wear_tested = ?, badge_description = ?, attributes_json = ?, updated_at = datetime('now')
+      SET title = ?, category = ?, department = ?, category_id = ?, price = ?, short_description = ?, is_wear_tested = ?, badge_description = ?, attributes_json = ?, updated_at = datetime('now')
       WHERE id = ?
     `).run(
       input.title,
       input.category,
+      input.department ?? current?.department ?? "unisex",
       categoryId,
       input.price,
       input.shortDescription,

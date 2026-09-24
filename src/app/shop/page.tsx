@@ -5,16 +5,29 @@ import ShopToolbar from "@/components/ShopToolbar";
 
 export const dynamic = "force-dynamic";
 
+const departmentLabels: Record<string, string> = {
+  women: "Women",
+  men: "Men",
+  kids: "Kids",
+  unisex: "Unisex",
+};
+
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; sort?: string }>;
+  searchParams: Promise<{ category?: string; department?: string; sort?: string }>;
 }) {
-  const { category, sort } = await searchParams;
+  const { category, department, sort } = await searchParams;
   const allProducts = listProducts();
-  const filtered = category
-    ? allProducts.filter((p) => p.category.toLowerCase() === category.toLowerCase())
-    : allProducts;
+  const filtered = allProducts.filter((p) => {
+    if (department && p.department.toLowerCase() !== department.toLowerCase()) return false;
+    if (category && p.category.toLowerCase() !== category.toLowerCase()) return false;
+    return true;
+  });
+
+  const departmentLabel = department ? (departmentLabels[department.toLowerCase()] ?? department) : null;
+  const heading = [departmentLabel, category].filter(Boolean).join(" · ") || "Shop All";
+  const hasFilter = Boolean(category || department);
 
   const products = [...filtered];
   if (sort === "price-asc") products.sort((a, b) => a.price - b.price);
@@ -25,8 +38,8 @@ export default async function ShopPage({
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-bold">{category ? `Shop ${category}` : "Shop All"}</h1>
-        {category && (
+        <h1 className="text-2xl font-bold">{heading}</h1>
+        {hasFilter && (
           <Link href="/shop" className="text-sm underline hover:text-accent">
             Clear filter
           </Link>
@@ -39,9 +52,9 @@ export default async function ShopPage({
 
       {products.length === 0 ? (
         <p className="text-foreground/60">
-          {category ? (
+          {hasFilter ? (
             <>
-              No products in {category} yet.{" "}
+              No products in {heading} yet.{" "}
               <Link href="/shop" className="underline hover:text-accent">
                 View all products
               </Link>
