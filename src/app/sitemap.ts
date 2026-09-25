@@ -12,8 +12,10 @@ const staticRoutes = [
   { path: "/shipping-returns", priority: 0.4, changeFrequency: "monthly" as const },
   { path: "/return-policy", priority: 0.4, changeFrequency: "monthly" as const },
   { path: "/team-orders", priority: 0.4, changeFrequency: "monthly" as const },
+  { path: "/sustainability", priority: 0.3, changeFrequency: "monthly" as const },
   { path: "/privacy-policy", priority: 0.2, changeFrequency: "yearly" as const },
   { path: "/terms-of-service", priority: 0.2, changeFrequency: "yearly" as const },
+  { path: "/accessibility", priority: 0.2, changeFrequency: "yearly" as const },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -8,6 +8,7 @@ type FooterLink = { label: string; href: string };
 const companyLinks: FooterLink[] = [
   { label: "About Us", href: "/about" },
   { label: "How We Test", href: "/about#how-we-test" },
+  { label: "Sustainability", href: "/sustainability" },
   { label: "Team Orders", href: "/team-orders" },
   { label: "Size Guide", href: "/size-guide" },
 ];
@@ -28,6 +29,7 @@ const shopLinks: FooterLink[] = navItems.map((item) => ({
 const legalLinks: FooterLink[] = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },
+  { label: "Accessibility Statement", href: "/accessibility" },
 ];
 
 function FooterColumn({ heading, links }: { heading: string; links: FooterLink[] }) {

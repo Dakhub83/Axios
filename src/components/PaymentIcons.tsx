@@ -45,6 +45,17 @@ function PaypalGlyph() {
   );
 }
 
+function InstallmentGlyph() {
+  return (
+    <svg viewBox="0 0 16 10" className="h-3.5 w-3.5 shrink-0" aria-hidden="true" fill="none" stroke="currentColor">
+      <rect x="0.5" y="5.5" width="3" height="4" rx="0.5" />
+      <rect x="4.5" y="3.5" width="3" height="6" rx="0.5" opacity="0.8" />
+      <rect x="8.5" y="1.5" width="3" height="8" rx="0.5" opacity="0.55" />
+      <rect x="12.5" y="0.5" width="3" height="9" rx="0.5" opacity="0.3" />
+    </svg>
+  );
+}
+
 const paymentChips = [
   { label: "Visa", glyph: <CardGlyph /> },
   { label: "Mastercard", glyph: <CardGlyph /> },
@@ -53,6 +64,9 @@ const paymentChips = [
   { label: "Apple Pay", glyph: <AppleGlyph /> },
   { label: "Google Pay", glyph: <GoogleGlyph /> },
   { label: "PayPal", glyph: <PaypalGlyph /> },
+  { label: "Klarna", glyph: <InstallmentGlyph /> },
+  { label: "Afterpay", glyph: <InstallmentGlyph /> },
+  { label: "Sezzle", glyph: <InstallmentGlyph /> },
 ];
 
 export default function PaymentIcons() {
