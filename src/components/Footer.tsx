@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { navItems } from "@/lib/megaMenu";
 import PaymentIcons from "./PaymentIcons";
+import SocialLinks from "./SocialLinks";
 
 type FooterLink = { label: string; href: string };
 
@@ -56,6 +57,9 @@ export default function Footer() {
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-foreground/60">
               Family-tested performance gear, sewn and stress-tested at home before it reaches you.
             </p>
+            <div className="mt-5">
+              <SocialLinks />
+            </div>
           </div>
 
           <FooterColumn heading="Company" links={companyLinks} />
