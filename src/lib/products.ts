@@ -149,6 +149,22 @@ export function getProductById(id: string): ProductWithDetails | null {
   return attachDetails(rowToProduct(row as Record<string, unknown>));
 }
 
+// Prefers a different category in the same department (e.g. a top to go with
+// leggings) and falls back to the rest of the department if there isn't enough.
+export function getRelatedProducts(
+  product: ProductWithDetails,
+  limit = 3
+): ProductWithDetails[] {
+  const others = listProducts().filter((p) => p.id !== product.id);
+  const sameDeptDifferentCategory = others.filter(
+    (p) => p.department === product.department && p.category !== product.category
+  );
+  const pool = sameDeptDifferentCategory.length >= limit
+    ? sameDeptDifferentCategory
+    : others.filter((p) => p.department === product.department);
+  return pool.slice(0, limit);
+}
+
 function slugify(title: string): string {
   return title
     .toLowerCase()

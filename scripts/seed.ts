@@ -1,5 +1,12 @@
-import { createProduct, type ProductInput } from "../src/lib/products";
+import { createProduct, createVariant, listVariantsForProduct, type ProductInput } from "../src/lib/products";
 import { db } from "../src/lib/db";
+
+// Deterministic so re-running the seed doesn't reshuffle stock levels.
+function inventoryFor(seed: string): number {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+  return (hash % 40) + 1; // 1..40
+}
 
 const BADGE =
   "This product completed our full 30-day internal testing cycle — worn by real members of our family through actual training sessions, washed 10+ times, and checked at three points for seam irritation, fabric recovery, and squat-proof opacity.";
@@ -341,9 +348,13 @@ function slugify(title: string): string {
 let created = 0;
 let patched = 0;
 
+let stocked = 0;
+
 for (const p of products) {
   const slug = slugify(p.title);
   const existing = db.prepare("SELECT id FROM products WHERE slug = ?").get(slug) as { id: string } | undefined;
+
+  let productId: string;
 
   if (existing) {
     // Keep any uploaded images and edits; just make sure it is filed correctly.
@@ -353,22 +364,38 @@ for (const p of products) {
       existing.id
     );
     patched += 1;
-    continue;
+    productId = existing.id;
+  } else {
+    const product = createProduct({
+      ...p,
+      isWearTested: p.isWearTested ?? true,
+      badgeDescription: p.isWearTested === false ? "" : BADGE,
+      images: [],
+    });
+    created += 1;
+    productId = product.id;
   }
 
-  createProduct({
-    ...p,
-    isWearTested: p.isWearTested ?? true,
-    badgeDescription: p.isWearTested === false ? "" : BADGE,
-    images: [],
-  });
-  created += 1;
+  // Back-fill one stock-keeping variant per size so the product page can show
+  // a real "low stock" / "out of stock" state instead of a fabricated one.
+  if (listVariantsForProduct(productId).length === 0) {
+    for (const row of p.sizeRows) {
+      createVariant({
+        productId,
+        color: "Default",
+        size: row.size,
+        sku: `${slug}-${row.size}`.toUpperCase().replace(/[^A-Z0-9]+/g, "-"),
+        inventoryCount: inventoryFor(`${slug}-${row.size}`),
+      });
+    }
+    stocked += 1;
+  }
 }
 
 const counts = db
   .prepare("SELECT department, COUNT(*) AS n FROM products GROUP BY department ORDER BY department")
   .all() as { department: string; n: number }[];
 
-console.log(`Seeded ${created} new products, refiled ${patched} existing.`);
+console.log(`Seeded ${created} new products, refiled ${patched} existing, stocked ${stocked} with variants.`);
 for (const c of counts) console.log(`  ${c.department}: ${c.n}`);
 console.log("Images are empty — upload them from /admin/products.");

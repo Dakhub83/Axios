@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import { getProductBySlug } from "@/lib/products";
+import { getProductBySlug, getRelatedProducts } from "@/lib/products";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartForm from "@/components/AddToCartForm";
 import WearTestedBadge from "@/components/WearTestedBadge";
-import FavoriteButton from "@/components/FavoriteButton";
+import PairsWellWith from "@/components/PairsWellWith";
 
 export const dynamic = "force-dynamic";
 
@@ -16,26 +16,25 @@ export default async function ProductPage({
   const product = getProductBySlug(slug);
   if (!product) notFound();
 
+  const related = getRelatedProducts(product);
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <ProductGallery images={product.images} title={product.title} />
 
         <div>
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-sm uppercase tracking-wide text-foreground/60">{product.category}</p>
-              <h1 className="text-2xl sm:text-3xl font-bold mt-1">{product.title}</h1>
-              <p className="text-xl mt-2">${product.price.toFixed(2)}</p>
-            </div>
-            <FavoriteButton productId={product.id} />
-          </div>
+          <p className="text-sm uppercase tracking-wide text-foreground/60">{product.category}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold mt-1">{product.title}</h1>
+          <p className="text-xl mt-2">${product.price.toFixed(2)}</p>
+
+          <AddToCartForm product={product} />
+
+          <PairsWellWith products={related} />
 
           {product.isWearTested && <WearTestedBadge description={product.badgeDescription} />}
 
           <p className="mt-4 text-foreground/80 leading-relaxed">{product.shortDescription}</p>
-
-          <AddToCartForm product={product} />
 
           {product.specs.length > 0 && (
             <div className="mt-10">

@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "./CartContext";
+import FavoriteButton from "./FavoriteButton";
 import type { ProductWithDetails } from "@/lib/types";
+
+const LOW_STOCK_THRESHOLD = 5;
 
 export default function AddToCartForm({ product }: { product: ProductWithDetails }) {
   const { addLine } = useCart();
@@ -13,7 +16,17 @@ export default function AddToCartForm({ product }: { product: ProductWithDetails
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
+  const variant = product.variants.find((v) => v.size === size);
+  const stock = variant ? variant.inventoryCount : null;
+  const outOfStock = stock === 0;
+
+  function handleSizeChange(next: string) {
+    setSize(next);
+    setQuantity(1);
+  }
+
   function handleAdd() {
+    if (outOfStock) return;
     addLine({
       productId: product.id,
       slug: product.slug,
@@ -29,6 +42,18 @@ export default function AddToCartForm({ product }: { product: ProductWithDetails
 
   return (
     <div className="mt-6 space-y-4">
+      {stock !== null && (
+        <p className="flex items-center gap-2 text-xs uppercase tracking-widest">
+          <span
+            aria-hidden
+            className={`h-1.5 w-1.5 rounded-full ${
+              outOfStock ? "bg-red-500" : stock <= LOW_STOCK_THRESHOLD ? "bg-amber-400" : "bg-emerald-500"
+            }`}
+          />
+          {outOfStock ? "Out of stock" : stock <= LOW_STOCK_THRESHOLD ? `Low stock — ${stock} left` : "In stock"}
+        </p>
+      )}
+
       {sizes.length > 0 && (
         <div>
           <label className="block text-sm font-semibold mb-2">Size</label>
@@ -37,7 +62,7 @@ export default function AddToCartForm({ product }: { product: ProductWithDetails
               <button
                 key={s}
                 type="button"
-                onClick={() => setSize(s)}
+                onClick={() => handleSizeChange(s)}
                 className={`px-3 py-1.5 rounded border text-sm ${
                   s === size ? "border-accent bg-accent text-black" : "border-border hover:border-accent"
                 }`}
@@ -51,34 +76,52 @@ export default function AddToCartForm({ product }: { product: ProductWithDetails
 
       <div>
         <label className="block text-sm font-semibold mb-2">Quantity</label>
-        <input
-          type="number"
-          min={1}
-          value={quantity}
-          onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-          className="w-20 border border-border rounded px-2 py-1.5 bg-background"
-        />
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            disabled={outOfStock}
+            aria-label="Decrease quantity"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border hover:border-accent transition-colors disabled:opacity-40"
+          >
+            −
+          </button>
+          <span className="w-6 text-center tabular-nums">{quantity}</span>
+          <button
+            type="button"
+            onClick={() => setQuantity((q) => Math.min(stock ?? Infinity, q + 1))}
+            disabled={outOfStock || (stock !== null && quantity >= stock)}
+            aria-label="Increase quantity"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border hover:border-accent transition-colors disabled:opacity-40"
+          >
+            +
+          </button>
+        </div>
       </div>
 
       <div className="flex gap-3">
         <button
           type="button"
           onClick={handleAdd}
-          className="flex-1 bg-accent text-black font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+          disabled={outOfStock}
+          className="flex-1 bg-accent text-black font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity disabled:opacity-40"
         >
-          {added ? "Added!" : "Add to Cart"}
+          {outOfStock ? "Out of Stock" : added ? "Added!" : "Add to Cart"}
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            handleAdd();
-            router.push("/cart");
-          }}
-          className="flex-1 border border-border font-semibold px-6 py-3 rounded-full hover:border-accent transition-colors"
-        >
-          Buy Now
-        </button>
+        <FavoriteButton productId={product.id} />
       </div>
+      <button
+        type="button"
+        onClick={() => {
+          if (outOfStock) return;
+          handleAdd();
+          router.push("/cart");
+        }}
+        disabled={outOfStock}
+        className="w-full border border-border font-semibold px-6 py-3 rounded-full hover:border-accent transition-colors disabled:opacity-40"
+      >
+        Buy It Now
+      </button>
     </div>
   );
 }
