@@ -173,6 +173,16 @@ export type TeamOrderInquiry = {
   createdAt: string;
 };
 
+export type ContactMessage = {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  emailed: boolean;
+  createdAt: string;
+};
+
 export type ReturnRequest = {
   id: string;
   orderEmail: string;

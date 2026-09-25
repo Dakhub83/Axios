@@ -21,6 +21,9 @@ export default function AdminLayout({ children }: LayoutProps<"/admin">) {
           <Link href="/admin/returns" className="hover:text-accent">
             Returns
           </Link>
+          <Link href="/admin/contact-messages" className="hover:text-accent">
+            Messages
+          </Link>
           <Link href="/" className="hover:text-accent">
             View site
           </Link>
