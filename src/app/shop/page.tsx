@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { listProducts } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
@@ -12,10 +13,41 @@ const departmentLabels: Record<string, string> = {
   unisex: "Unisex",
 };
 
+type ShopSearchParams = { category?: string; department?: string; sort?: string; q?: string };
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<ShopSearchParams>;
+}): Promise<Metadata> {
+  const { category, department, q } = await searchParams;
+  const departmentLabel = department ? (departmentLabels[department.toLowerCase()] ?? department) : null;
+  const label = [departmentLabel, category].filter(Boolean).join(" ") || "All Products";
+
+  // Internal search results are noise for search engines — index the
+  // department/category collection pages, not the query-string variants.
+  if (q?.trim()) {
+    return {
+      title: `Search results for "${q.trim()}"`,
+      robots: { index: false, follow: true },
+    };
+  }
+
+  return {
+    title: label === "All Products" ? "Shop" : label,
+    description: `Shop ${label.toLowerCase()} from Axios — designed, sewn, and wear-tested at home before it ships.`,
+    alternates: {
+      canonical: `/shop${department ? `?department=${department}` : ""}${
+        category ? `${department ? "&" : "?"}category=${encodeURIComponent(category)}` : ""
+      }`,
+    },
+  };
+}
+
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; department?: string; sort?: string; q?: string }>;
+  searchParams: Promise<ShopSearchParams>;
 }) {
   const { category, department, sort, q } = await searchParams;
   const query = q?.trim().toLowerCase() || "";

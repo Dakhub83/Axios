@@ -1,11 +1,43 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductBySlug, getRelatedProducts } from "@/lib/products";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartForm from "@/components/AddToCartForm";
 import WearTestedBadge from "@/components/WearTestedBadge";
 import PairsWellWith from "@/components/PairsWellWith";
+import { SITE_NAME } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = getProductBySlug(slug);
+  if (!product) return {};
+
+  const image = product.images[0]?.url;
+
+  return {
+    title: product.title,
+    description: product.shortDescription,
+    alternates: { canonical: `/products/${product.slug}` },
+    openGraph: {
+      title: `${product.title} | ${SITE_NAME}`,
+      description: product.shortDescription,
+      type: "website",
+      images: image ? [{ url: image, alt: product.images[0]?.altText || product.title }] : undefined,
+    },
+    twitter: {
+      card: image ? "summary_large_image" : "summary",
+      title: product.title,
+      description: product.shortDescription,
+      images: image ? [image] : undefined,
+    },
+  };
+}
 
 export default async function ProductPage({
   params,
@@ -17,9 +49,34 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const related = getRelatedProducts(product);
+  const totalStock = product.variants.reduce((sum, v) => sum + v.inventoryCount, 0);
+  const hasVariants = product.variants.length > 0;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.shortDescription,
+    category: product.category,
+    image: product.images.map((img) => img.url),
+    offers: {
+      "@type": "Offer",
+      url: `/products/${product.slug}`,
+      priceCurrency: "USD",
+      price: product.price.toFixed(2),
+      availability:
+        !hasVariants || totalStock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+    },
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <ProductGallery images={product.images} title={product.title} />
 
