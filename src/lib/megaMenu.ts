@@ -7,6 +7,7 @@ export type NavItem = {
   label: string;
   href: string;
   links?: MenuLink[];
+  proof?: string;
 };
 
 // Every entry points at a filter that returns real products. Add a link when
@@ -15,10 +16,12 @@ export const navItems: NavItem[] = [
   {
     label: "New In",
     href: "/shop?sort=new",
+    proof: "Nothing ships until it's hand-tested at home.",
   },
   {
     label: "Women",
     href: "/shop?department=women",
+    proof: "Tested through 200 squats — zero see-through.",
     links: [
       { label: "Leggings", href: "/shop?department=women&category=Leggings" },
       { label: "Sports Bras", href: "/shop?department=women&category=Sports%20Bras" },
@@ -30,6 +33,7 @@ export const navItems: NavItem[] = [
   {
     label: "Men",
     href: "/shop?department=men",
+    proof: "Flatlock seams. Zero chafe, mile six.",
     links: [
       { label: "Tops", href: "/shop?department=men&category=Tops" },
       { label: "Tanks & Stringers", href: "/shop?department=men&category=Tanks" },
@@ -42,6 +46,7 @@ export const navItems: NavItem[] = [
   {
     label: "Kids",
     href: "/shop?department=kids",
+    proof: "Same 30-day wear test, sized for growing kids.",
     links: [
       { label: "Tops", href: "/shop?department=kids&category=Tops" },
       { label: "Shorts", href: "/shop?department=kids&category=Shorts" },
@@ -53,6 +58,7 @@ export const navItems: NavItem[] = [
   {
     label: "Accessories",
     href: "/shop?category=Accessories",
+    proof: "Built to outlast the kit it rides with.",
   },
 ];
 
