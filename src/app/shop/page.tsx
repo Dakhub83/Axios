@@ -35,7 +35,7 @@ export async function generateMetadata({
 
   return {
     title: label === "All Products" ? "Shop" : label,
-    description: `Shop ${label.toLowerCase()} from Axios — designed, sewn, and wear-tested at home before it ships.`,
+    description: `Shop ${label.toLowerCase()} from Axios — designed and wear-tested at home before it ships.`,
     alternates: {
       canonical: `/shop${department ? `?department=${department}` : ""}${
         category ? `${department ? "&" : "?"}category=${encodeURIComponent(category)}` : ""

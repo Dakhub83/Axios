@@ -95,7 +95,7 @@ export default function Header({ user }: { user: SafeUser | null }) {
             <svg
               aria-hidden
               viewBox="0 0 20 20"
-              className="h-[18px] w-[18px]"
+              className="h-[1.125rem] w-[1.125rem]"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.6"
@@ -113,7 +113,7 @@ export default function Header({ user }: { user: SafeUser | null }) {
             <svg
               aria-hidden
               viewBox="0 0 20 18"
-              className="h-[18px] w-[18px]"
+              className="h-[1.125rem] w-[1.125rem]"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.6"
@@ -134,7 +134,7 @@ export default function Header({ user }: { user: SafeUser | null }) {
             <svg
               aria-hidden
               viewBox="0 0 20 20"
-              className="h-[18px] w-[18px]"
+              className="h-[1.125rem] w-[1.125rem]"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.6"

@@ -24,7 +24,7 @@ export default function SearchBar({ onSearch }: { onSearch: () => void }) {
       <svg
         aria-hidden
         viewBox="0 0 20 20"
-        className="h-[18px] w-[18px] shrink-0 text-foreground/50"
+        className="h-[1.125rem] w-[1.125rem] shrink-0 text-foreground/50"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.6"

@@ -12,7 +12,7 @@ export default function FavoriteButton({
   const { isFavorite, toggle } = useFavorites();
   const active = isFavorite(productId);
   const dimensions = size === "sm" ? "h-8 w-8" : "h-10 w-10";
-  const iconSize = size === "sm" ? "h-4 w-4" : "h-[18px] w-[18px]";
+  const iconSize = size === "sm" ? "h-4 w-4" : "h-[1.125rem] w-[1.125rem]";
 
   return (
     <button

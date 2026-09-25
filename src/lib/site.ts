@@ -3,4 +3,4 @@
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const SITE_NAME = "Axios";
 export const SITE_DESCRIPTION =
-  "Gym wear and footwear designed, sewn, and wear-tested at home before it ever reaches you.";
+  "Gym wear and footwear designed and wear-tested at home before it ever reaches you.";

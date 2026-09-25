@@ -26,10 +26,18 @@
   --font-serif: var(--font-serif);
 }
 
+html {
+  /* 16px -> 18px. Every rem-based Tailwind size (text, spacing, the icon
+     sizes converted to rem alongside this change) scales from here. */
+  font-size: 112.5%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
 }
 
 @keyframes float {

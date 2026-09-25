@@ -8,6 +8,7 @@ type FooterLink = { label: string; href: string };
 const companyLinks: FooterLink[] = [
   { label: "About Us", href: "/about" },
   { label: "How We Test", href: "/about#how-we-test" },
+  { label: "Where It's Made", href: "/production" },
   { label: "Sustainability", href: "/sustainability" },
   { label: "Team Orders", href: "/team-orders" },
   { label: "Size Guide", href: "/size-guide" },
@@ -19,6 +20,7 @@ const supportLinks: FooterLink[] = [
   { label: "FAQ", href: "/faq" },
   { label: "Return Policy", href: "/return-policy" },
   { label: "Return Item", href: "/return-item" },
+  { label: "Student & Military Discount", href: "/discounts" },
 ];
 
 const shopLinks: FooterLink[] = navItems.map((item) => ({
@@ -57,7 +59,7 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <p className="font-serif text-lg tracking-[0.15em] uppercase">Axios</p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-foreground/60">
-              Family-tested performance gear, sewn and stress-tested at home before it reaches you.
+              Family-tested performance gear, designed and stress-tested at home before it reaches you.
             </p>
             <div className="mt-5">
               <SocialLinks />
