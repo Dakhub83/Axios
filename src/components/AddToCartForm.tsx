@@ -64,7 +64,7 @@ export default function AddToCartForm({ product }: { product: ProductWithDetails
                 type="button"
                 onClick={() => handleSizeChange(s)}
                 className={`px-3 py-1.5 rounded border text-sm ${
-                  s === size ? "border-accent bg-accent text-accent-ink" : "border-border hover:border-accent"
+                  s === size ? "border-accent bg-accent text-black" : "border-border hover:border-accent"
                 }`}
               >
                 {s}
@@ -104,7 +104,7 @@ export default function AddToCartForm({ product }: { product: ProductWithDetails
           type="button"
           onClick={handleAdd}
           disabled={outOfStock}
-          className="flex-1 bg-accent text-accent-ink font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity disabled:opacity-40"
+          className="flex-1 bg-accent text-black font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity disabled:opacity-40"
         >
           {outOfStock ? "Out of Stock" : added ? "Added!" : "Add to Cart"}
         </button>

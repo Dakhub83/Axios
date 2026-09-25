@@ -14,7 +14,7 @@ export default function AdminProductsPage() {
         <h2 className="text-lg font-semibold">Products ({products.length})</h2>
         <Link
           href="/admin/products/new"
-          className="bg-accent text-accent-ink font-semibold px-4 py-2 rounded-full text-sm hover:opacity-90"
+          className="bg-accent text-black font-semibold px-4 py-2 rounded-full text-sm hover:opacity-90"
         >
           + Add Product
         </Link>

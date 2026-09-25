@@ -76,7 +76,7 @@ export default function ProductCard({ product }: { product: ProductWithDetails }
           <button
             type="button"
             onClick={handleQuickAdd}
-            className="w-full rounded-full border border-accent bg-background/90 py-2.5 text-xs font-semibold uppercase tracking-widest text-accent backdrop-blur-sm transition-colors hover:bg-accent hover:text-accent-ink"
+            className="w-full rounded-full border border-accent bg-background/90 py-2.5 text-xs font-semibold uppercase tracking-widest text-accent backdrop-blur-sm transition-colors hover:bg-accent hover:text-black"
           >
             {added ? "Added" : "Quick Add"}
           </button>
