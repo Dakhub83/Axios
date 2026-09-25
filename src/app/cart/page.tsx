@@ -61,7 +61,7 @@ export default function CartPage() {
 
       <Link
         href="/checkout"
-        className="mt-6 block text-center bg-accent text-black font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+        className="mt-6 block text-center bg-accent text-accent-ink font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
       >
         Proceed to Checkout
       </Link>

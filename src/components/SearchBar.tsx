@@ -42,7 +42,7 @@ export default function SearchBar({ onSearch }: { onSearch: () => void }) {
       />
       <button
         type="submit"
-        className="shrink-0 rounded-full border border-accent px-5 py-1.5 text-xs uppercase tracking-widest text-accent transition-colors hover:bg-accent hover:text-black"
+        className="shrink-0 rounded-full border border-accent px-5 py-1.5 text-xs uppercase tracking-widest text-accent transition-colors hover:bg-accent hover:text-accent-ink"
       >
         Search
       </button>

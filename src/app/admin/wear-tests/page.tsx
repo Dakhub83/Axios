@@ -55,7 +55,7 @@ export default function AdminWearTestsPage() {
           <textarea name="performanceNotes" rows={2} className="w-full border border-border rounded px-3 py-2 bg-background" />
         </div>
         <div className="sm:col-span-2">
-          <button type="submit" className="bg-accent text-black font-semibold px-6 py-2.5 rounded-full hover:opacity-90">
+          <button type="submit" className="bg-accent text-accent-ink font-semibold px-6 py-2.5 rounded-full hover:opacity-90">
             Log entry
           </button>
         </div>

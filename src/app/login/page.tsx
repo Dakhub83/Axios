@@ -38,7 +38,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={pending}
-            className="w-full bg-accent text-black font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="w-full bg-accent text-accent-ink font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity disabled:opacity-50"
           >
             {pending ? "Logging in..." : "Log In"}
           </button>

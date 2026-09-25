@@ -75,7 +75,7 @@ export default function Header({ user }: { user: SafeUser | null }) {
               {item.label}
               <span
                 aria-hidden
-                className={`pointer-events-none absolute inset-x-0 -bottom-[7px] h-[2px] origin-center rounded-full bg-accent shadow-[0_0_8px_1px_rgba(201,162,75,0.55)] transition-transform duration-200 ${
+                className={`pointer-events-none absolute inset-x-0 -bottom-[7px] h-[2px] origin-center rounded-full bg-accent shadow-[0_0_8px_1px_rgba(122,46,63,0.55)] transition-transform duration-200 ${
                   hovered === item.label ? "scale-x-100" : "scale-x-0"
                 }`}
               />

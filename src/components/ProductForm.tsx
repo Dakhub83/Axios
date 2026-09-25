@@ -137,7 +137,7 @@ export default function ProductForm({
 
       <button
         type="submit"
-        className="bg-accent text-black font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+        className="bg-accent text-accent-ink font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
       >
         {product ? "Save Changes" : "Create Product"}
       </button>

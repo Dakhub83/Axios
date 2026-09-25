@@ -6,7 +6,7 @@ export default function FavoritesCount() {
   const { count } = useFavorites();
   if (count === 0) return null;
   return (
-    <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-semibold text-black">
+    <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-semibold text-accent-ink">
       {count}
     </span>
   );

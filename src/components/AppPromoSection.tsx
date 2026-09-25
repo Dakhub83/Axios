@@ -40,14 +40,14 @@ export default async function AppPromoSection() {
   const qrSvg = await QRCode.toString(SITE_URL, {
     type: "svg",
     margin: 0,
-    color: { dark: "#c9a24b", light: "#00000000" },
+    color: { dark: "#7a2e3f", light: "#00000000" },
   });
 
   return (
     <section className="relative overflow-hidden border-t border-border">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_30%,rgba(201,162,75,0.12),transparent_55%),radial-gradient(circle_at_85%_70%,rgba(201,162,75,0.08),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_30%,rgba(122,46,63,0.12),transparent_55%),radial-gradient(circle_at_85%_70%,rgba(122,46,63,0.08),transparent_55%)]"
       />
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-4 py-24 lg:grid-cols-2">
@@ -105,7 +105,7 @@ export default async function AppPromoSection() {
                     <div className="rounded-md bg-linear-to-br from-muted via-muted to-background aspect-[4/5]" />
                   </div>
 
-                  <div className="mt-3 rounded-full bg-accent py-2 text-center text-[10px] font-semibold uppercase tracking-widest text-black">
+                  <div className="mt-3 rounded-full bg-accent py-2 text-center text-[10px] font-semibold uppercase tracking-widest text-accent-ink">
                     Quick Add
                   </div>
                 </div>
