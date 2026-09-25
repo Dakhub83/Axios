@@ -96,6 +96,15 @@ export default function MobileNav({
         })}
         <li className="pt-4">
           <Link
+            href="/favorites"
+            onClick={onNavigate}
+            className="font-serif text-xl hover:text-accent transition-colors sm:hidden"
+          >
+            Favorites
+          </Link>
+        </li>
+        <li className="pt-4">
+          <Link
             href={user ? "/account" : "/login"}
             onClick={onNavigate}
             className="font-serif text-xl hover:text-accent transition-colors sm:hidden"

@@ -15,19 +15,26 @@ const departmentLabels: Record<string, string> = {
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; department?: string; sort?: string }>;
+  searchParams: Promise<{ category?: string; department?: string; sort?: string; q?: string }>;
 }) {
-  const { category, department, sort } = await searchParams;
+  const { category, department, sort, q } = await searchParams;
+  const query = q?.trim().toLowerCase() || "";
   const allProducts = listProducts();
   const filtered = allProducts.filter((p) => {
     if (department && p.department.toLowerCase() !== department.toLowerCase()) return false;
     if (category && p.category.toLowerCase() !== category.toLowerCase()) return false;
+    if (query) {
+      const haystack = `${p.title} ${p.category} ${p.shortDescription}`.toLowerCase();
+      if (!haystack.includes(query)) return false;
+    }
     return true;
   });
 
   const departmentLabel = department ? (departmentLabels[department.toLowerCase()] ?? department) : null;
-  const heading = [departmentLabel, category].filter(Boolean).join(" · ") || "Shop All";
-  const hasFilter = Boolean(category || department);
+  const heading = query
+    ? `Results for "${q?.trim()}"`
+    : [departmentLabel, category].filter(Boolean).join(" · ") || "Shop All";
+  const hasFilter = Boolean(category || department || query);
 
   const products = [...filtered];
   if (sort === "price-asc") products.sort((a, b) => a.price - b.price);
@@ -52,7 +59,15 @@ export default async function ShopPage({
 
       {products.length === 0 ? (
         <p className="text-foreground/60">
-          {hasFilter ? (
+          {query ? (
+            <>
+              Nothing matched &quot;{q?.trim()}&quot;.{" "}
+              <Link href="/shop" className="underline hover:text-accent">
+                View all products
+              </Link>
+              .
+            </>
+          ) : hasFilter ? (
             <>
               No products in {heading} yet.{" "}
               <Link href="/shop" className="underline hover:text-accent">

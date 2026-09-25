@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/components/CartContext";
+import { FavoritesProvider } from "@/components/FavoritesContext";
 import PromoBar from "@/components/PromoBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -38,10 +39,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <CartProvider>
-          <PromoBar />
-          <Header user={user} />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <FavoritesProvider>
+            <PromoBar />
+            <Header user={user} />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </FavoritesProvider>
         </CartProvider>
       </body>
     </html>

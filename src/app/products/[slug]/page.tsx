@@ -3,6 +3,7 @@ import { getProductBySlug } from "@/lib/products";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartForm from "@/components/AddToCartForm";
 import WearTestedBadge from "@/components/WearTestedBadge";
+import FavoriteButton from "@/components/FavoriteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -21,9 +22,14 @@ export default async function ProductPage({
         <ProductGallery images={product.images} title={product.title} />
 
         <div>
-          <p className="text-sm uppercase tracking-wide text-foreground/60">{product.category}</p>
-          <h1 className="text-2xl sm:text-3xl font-bold mt-1">{product.title}</h1>
-          <p className="text-xl mt-2">${product.price.toFixed(2)}</p>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-sm uppercase tracking-wide text-foreground/60">{product.category}</p>
+              <h1 className="text-2xl sm:text-3xl font-bold mt-1">{product.title}</h1>
+              <p className="text-xl mt-2">${product.price.toFixed(2)}</p>
+            </div>
+            <FavoriteButton productId={product.id} />
+          </div>
 
           {product.isWearTested && <WearTestedBadge description={product.badgeDescription} />}
 

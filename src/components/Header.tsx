@@ -3,8 +3,10 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import CartCount from "./CartCount";
+import FavoritesCount from "./FavoritesCount";
 import NavPanel from "./NavPanel";
 import MobileNav from "./MobileNav";
+import SearchBar from "./SearchBar";
 import { navItems } from "@/lib/megaMenu";
 import type { SafeUser } from "@/lib/auth";
 
@@ -15,11 +17,19 @@ function supportsHover() {
 export default function Header({ user }: { user: SafeUser | null }) {
   const [hovered, setHovered] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function reset() {
     setHovered(null);
     setMobileOpen(false);
+    setSearchOpen(false);
+  }
+
+  function toggleSearch() {
+    setMobileOpen(false);
+    setHovered(null);
+    setSearchOpen((v) => !v);
   }
 
   function handleEnter(label: string) {
@@ -73,7 +83,48 @@ export default function Header({ user }: { user: SafeUser | null }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="ml-auto flex items-center gap-4 lg:ml-0">
+          <button
+            type="button"
+            onClick={toggleSearch}
+            aria-expanded={searchOpen}
+            aria-controls="header-search"
+            aria-label={searchOpen ? "Close search" : "Search"}
+            className="flex items-center hover:text-accent transition-colors"
+          >
+            <svg
+              aria-hidden
+              viewBox="0 0 20 20"
+              className="h-[18px] w-[18px]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+            >
+              <circle cx="8.5" cy="8.5" r="6" />
+              <path d="M17 17l-4-4" strokeLinecap="round" />
+            </svg>
+          </button>
+          <Link
+            href="/favorites"
+            onClick={reset}
+            aria-label="Favorites"
+            className="relative hidden items-center hover:text-accent transition-colors sm:flex"
+          >
+            <svg
+              aria-hidden
+              viewBox="0 0 20 18"
+              className="h-[18px] w-[18px]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+            >
+              <path
+                d="M10 17S1.5 12 1.5 6.2C1.5 3.3 3.7 1.5 6.2 1.5c1.6 0 3.1.9 3.8 2.3.7-1.4 2.2-2.3 3.8-2.3 2.5 0 4.7 1.8 4.7 4.7C18.5 12 10 17 10 17z"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <FavoritesCount />
+          </Link>
           <Link
             href={user ? "/account" : "/login"}
             onClick={reset}
@@ -118,6 +169,15 @@ export default function Header({ user }: { user: SafeUser | null }) {
             </span>
           </button>
         </div>
+      </div>
+
+      <div
+        id="header-search"
+        className={`overflow-hidden border-t border-border bg-background transition-all duration-200 ease-out ${
+          searchOpen ? "max-h-24 opacity-100" : "max-h-0 border-t-0 opacity-0"
+        }`}
+      >
+        {searchOpen && <SearchBar onSearch={() => setSearchOpen(false)} />}
       </div>
 
       <NavPanel item={activeItem} visible={!!hovered} onNavigate={reset} />

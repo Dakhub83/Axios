@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "./CartContext";
+import FavoriteButton from "./FavoriteButton";
 import type { ProductWithDetails } from "@/lib/types";
 
 const NEW_DROP_WINDOW_DAYS = 30;
@@ -51,6 +52,10 @@ export default function ProductCard({ product }: { product: ProductWithDetails }
             </div>
           )}
         </Link>
+
+        <div className="absolute right-3 top-3 z-10">
+          <FavoriteButton productId={product.id} size="sm" />
+        </div>
 
         {(isNewDrop(product.createdAt) || product.isWearTested) && (
           <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col items-start gap-1.5">
