@@ -118,7 +118,7 @@ export default function AddToCartForm({ product }: { product: ProductWithDetails
           router.push("/cart");
         }}
         disabled={outOfStock}
-        className="w-full border border-border font-semibold px-6 py-3 rounded-full hover:border-accent transition-colors disabled:opacity-40"
+        className="w-full border border-bone text-bone font-semibold px-6 py-3 rounded-full hover:bg-bone hover:text-background transition-colors disabled:opacity-40"
       >
         Buy It Now
       </button>

@@ -7,6 +7,10 @@
   --muted: #1a1a1a;
   --border: #2a2a2a;
   --tag-restocked: #7c93a3;
+  /* Third color alongside black + gold — a warm off-white for quiet
+     secondary buttons and badges that shouldn't compete with the gold
+     accent (e.g. Buy It Now, Wear-Tested badge). */
+  --bone: #d8cfbe;
 }
 
 @theme inline {
@@ -16,6 +20,7 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-tag-restocked: var(--tag-restocked);
+  --color-bone: var(--bone);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-serif);
